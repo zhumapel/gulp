@@ -37,8 +37,7 @@ Follow the steps below to get started with this Gulp build tool:
 
 Feel free to customize the Gulp build according to your specific requirements. You can modify the `gulpfile.js` file to add or remove tasks, configure additional file processing, or include other plugins to enhance your development workflow.
 
-
-Here's the complete folder and file structure for our Gulp build:
+##
 
 ```
 ├── dist/                  # Folder containing compiled files for deployment
