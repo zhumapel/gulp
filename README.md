@@ -34,6 +34,162 @@ Feel free to explore and customize the Gulp tasks and configuration to fit your 
 
 **Note**: Make sure you have Node.js and Gulp installed before using this build configuration.
 
+## Sample gulpfile.js
+This file will give you a taste of what gulp does.
+```javascript
+const gulp = require('gulp');
+const sass = require('gulp-sass')(require('sass'));
+const cleanCSS = require('gulp-clean-css');
+const htmlmin = require('gulp-htmlmin');
+const browserSync = require('browser-sync').create();
+const fs = require('fs');
+const path = require('path');
+
+// The paths object contains the paths to source and destination files and folders
+const paths = {
+    styles: {
+        src: 'src/scss/**/*.scss', // Path to SCSS source files
+        dest: 'dist/css' // Path to the target folder for compiled CSS
+    },
+    html: {
+        src: 'src/*.html', // Path to HTML source files
+        dest: 'dist' // Path to the target folder for HTML files
+    },
+    js: {
+        src: 'src/js/**/*.js', // Path to JavaScript source files
+        dest: 'dist/js' // Path to the target folder for JavaScript files
+    },
+    images: {
+        src: 'src/images/**/*', // Path to source images
+        dest: 'dist/images' // Path to the target folder for images
+    },
+    fonts: {
+        src: 'src/fonts/**/*', // Path to font source files
+        dest: 'dist/fonts' // Path to the target folder for fonts
+    }
+};
+
+// Function to clean the target folders before building
+function clean() {
+    return new Promise((resolve, reject) => {
+        if (fs.existsSync(paths.styles.dest)) {
+            const files = fs.readdirSync(paths.styles.dest);
+            for (const file of files) {
+                if (file !== 'style.scss') {
+                    fs.unlinkSync(path.join(paths.styles.dest, file));
+                }
+            }
+        }
+        resolve();
+    });
+}
+
+// Function to create the target folders before building
+function createDistFolder() {
+    return new Promise((resolve, reject) => {
+        fs.mkdir(paths.styles.dest, { recursive: true }, err => {
+            if (err) reject(err);
+            else {
+                fs.mkdir(paths.js.dest, { recursive: true }, err => {
+                    if (err) reject(err);
+                    else {
+                        fs.mkdir(paths.images.dest, { recursive: true }, err => {
+                            if (err) reject(err);
+                            else {
+                                fs.mkdir(paths.fonts.dest, { recursive: true }, err => {
+                                    if (err) reject(err);
+                                    else {
+                                        resolve();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+}
+
+// Function to compile and minify SCSS styles
+function styles() {
+    return gulp
+        .src(paths.styles.src)
+        .pipe(sass().on('error', sass.logError))
+        .pipe(cleanCSS())
+        .pipe(gulp.dest(paths.styles.dest))
+        .pipe(browserSync.stream());
+}
+
+// Function to minify HTML
+function html() {
+    return gulp
+        .src(paths.html.src)
+        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(gulp.dest(paths.html.dest))
+        .pipe(browserSync.stream());
+}
+
+// Function to move JavaScript files
+function scripts() {
+    return gulp
+        .src(paths.js.src)
+        .pipe(gulp.dest(paths.js.dest))
+        .pipe(browserSync.stream());
+}
+
+// Function to move index.html file to the target folder
+function moveIndex() {
+    return gulp
+        .src('src/index.html', { allowEmpty: true })
+        .pipe(gulp.dest(paths.html.dest))
+        .pipe(browserSync.stream());
+}
+
+// Function to move main.js file to the target folder
+function moveMainJs() {
+    return gulp
+        .src('src/js/main.js', { allowEmpty: true })
+        .pipe(gulp.dest(paths.js.dest))
+        .pipe(browserSync.stream());
+}
+
+// Function to copy styles from src/css to dist/css
+function copyStyles() {
+    return gulp
+        .src('src/css/**/*.css')
+        .pipe(gulp.dest('dist/css'))
+        .pipe(browserSync.stream());
+}
+
+// Function to start a development server and watch for file changes
+function serve() {
+    browserSync.init({
+        server: {
+            baseDir: './dist'
+        }
+    });
+
+    gulp.watch('src/**/*', gulp.series(clean, gulp.parallel(styles, html, scripts, moveIndex, moveMainJs, copyStyles))).on('change', browserSync.reload);
+}
+
+// Export tasks for command line access
+exports.clean = clean;
+exports.styles = styles;
+exports.html = html;
+exports.scripts = scripts;
+exports.moveIndex = moveIndex;
+exports.moveMainJs = moveMainJs;
+exports.serve = serve;
+exports.default = gulp.series(
+    createDistFolder,
+    clean,
+    gulp.parallel(styles, html, scripts, moveIndex, moveMainJs),
+    serve
+);
+```
+
+
 ## Folder Structure
 Here is the complete folder structure recommended to be used with this Gulp build:
 
