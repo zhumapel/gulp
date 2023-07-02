@@ -37,30 +37,31 @@ Follow the steps below to get started with this Gulp build tool:
 
 Feel free to customize the Gulp build according to your specific requirements. You can modify the `gulpfile.js` file to add or remove tasks, configure additional file processing, or include other plugins to enhance your development workflow.
 
-Конечно! Вот полная структура папок и файлов для нашей сборки Gulp:
+
+Here's the complete folder and file structure for our Gulp build:
 
 ```
-├── dist/                  # Папка с собранными файлами для развертывания
-│   ├── css/               # Папка с компилированными и минифицированными стилями
-│   │   └── main.css       # Главный файл стилей
-│   ├── js/                # Папка с перемещенными файлами JavaScript
-│   │   └── main.js        # Главный файл JavaScript
-│   ├── images/            # Папка с оптимизированными изображениями
-│   ├── fonts/             # Папка со шрифтами
-│   └── index.html         # Главная страница приложения
-├── src/                   # Исходные файлы для разработки
-│   ├── scss/              # Исходные файлы SCSS
-│   │   └── main.scss      # Главный файл SCSS
-│   ├── js/                # Исходные файлы JavaScript
-│   │   └── main.js        # Главный файл JavaScript
-│   ├── images/            # Исходные изображения
-│   ├── fonts/             # Исходные файлы шрифтов
-│   └── index.html         # Исходный файл главной страницы
-├── gulpfile.js            # Файл конфигурации Gulp
-├── package.json           # Файл зависимостей npm
-└── README.md              # Файл README с описанием проекта и инструкциями
+├── dist/                  # Folder containing compiled files for deployment
+│   ├── css/               # Folder containing compiled and minified styles
+│   │   └── main.css       # Main style file
+│   ├── js/                # Folder containing moved JavaScript files
+│   │   └── main.js        # Main JavaScript file
+│   ├── images/            # Folder containing optimized images
+│   ├── fonts/             # Folder containing fonts
+│   └── index.html         # Main application page
+├── src/                   # Source files for development
+│   ├── scss/              # SCSS source files
+│   │   └── main.scss      # Main SCSS file
+│   ├── js/                # JavaScript source files
+│   │   └── main.js        # Main JavaScript file
+│   ├── images/            # Source images
+│   ├── fonts/             # Font files
+│   └── index.html         # Main page source file
+├── gulpfile.js            # Gulp configuration file
+├── package.json           # npm dependency file
+└── README.md              # README file with project description and instructions
 ```
 
-Это полная структура папок и файлов для нашей сборки Gulp. В папке `src` находятся все исходные файлы, которые будут обрабатываться Gulp. Результаты обработки, такие как компилированные стили, перемещенные файлы JavaScript, оптимизированные изображения и собранные файлы шрифтов, сохраняются в папке `dist`.
+This is the complete folder and file structure for our Gulp build. The `src` folder contains all the source files that will be processed by Gulp. The output of the processing, such as compiled styles, moved JavaScript files, optimized images, and assembled font files, is stored in the `dist` folder.
 
-Вы можете дополнительно настроить структуру папок в соответствии со своими потребностями и добавить другие папки или файлы в проект.
+You can customize the folder structure further according to your needs and add other folders or files to the project.
